@@ -48,30 +48,44 @@ export default async function Home({ params }: Props) {
   });
 
   return (
-    <>
+
+    <main>
+      {/* 1. Hero */}
       <Slideshow />
 
-      <FeaturedProductList
-        cta={{ label: t('FeaturedProducts.cta'), href: '/shop-all' }}
-        description={t('FeaturedProducts.description')}
-        emptyStateSubtitle={t('FeaturedProducts.emptyStateSubtitle')}
-        emptyStateTitle={t('FeaturedProducts.emptyStateTitle')}
-        products={streamableFeaturedProducts}
-        title={t('FeaturedProducts.title')}
-      />
+      {/* 2. Featured Products */}
+      <section className="py-12">
+        <FeaturedProductList
+          cta={{ label: t('FeaturedProducts.cta'), href: '/shop-all' }}
+          description={t('FeaturedProducts.description')}
+          emptyStateSubtitle={t('FeaturedProducts.emptyStateSubtitle')}
+          emptyStateTitle={t('FeaturedProducts.emptyStateTitle')}
+          products={streamableFeaturedProducts}
+          title={t('FeaturedProducts.title')}
+        />
+      </section>
 
-      <FeaturedProductCarousel
-        cta={{ label: t('NewestProducts.cta'), href: '/shop-all/?sort=newest' }}
-        description={t('NewestProducts.description')}
-        emptyStateSubtitle={t('NewestProducts.emptyStateSubtitle')}
-        emptyStateTitle={t('NewestProducts.emptyStateTitle')}
-        nextLabel={t('NewestProducts.nextProducts')}
-        previousLabel={t('NewestProducts.previousProducts')}
-        products={streamableNewestProducts}
-        title={t('NewestProducts.title')}
-      />
+      {/* 3. New Arrivals */}
+      <section className="py-16 bg-gray-50">
+        <FeaturedProductCarousel
+          cta={{ label: t('NewestProducts.cta'), href: '/shop-all/?sort=newest' }}
+          description={t('NewestProducts.description')}
+          emptyStateSubtitle={t('NewestProducts.emptyStateSubtitle')}
+          emptyStateTitle={t('NewestProducts.emptyStateTitle')}
+          nextLabel={t('NewestProducts.nextProducts')}
+          previousLabel={t('NewestProducts.previousProducts')}
+          products={streamableNewestProducts}
+          title={t('NewestProducts.title')}
+        />
+      </section>
 
-      <Subscribe />
-    </>
+     
+
+      {/* 5. Newsletter Signup */}
+      <section className="py-20 bg-primary text-white text-center">
+        <Subscribe />
+      </section>
+    </main>
+    
   );
 }

@@ -88,6 +88,11 @@ const config = {
           highlight: 'color-mix(in oklab, hsl(var(--accent)), white 75%)',
           shadow: 'color-mix(in oklab, hsl(var(--accent)), black 75%)',
         },
+        highlight: {
+          DEFAULT: 'hsl(var(--highlight))',
+          highlight: 'color-mix(in oklab, hsl(var(--highlight)), white 75%)',
+          shadow: 'color-mix(in oklab, hsl(var(--highlight)), black 75%)',
+        },
         success: {
           DEFAULT: 'hsl(var(--success))',
           highlight: 'color-mix(in oklab, hsl(var(--success)), white 75%)',
