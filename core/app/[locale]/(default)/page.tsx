@@ -5,11 +5,16 @@ import { Streamable } from '@/vibes/soul/lib/streamable';
 import { FeaturedProductCarousel } from '@/vibes/soul/sections/featured-product-carousel';
 import { FeaturedProductList } from '@/vibes/soul/sections/featured-product-list';
 import { getSessionCustomerAccessToken } from '~/auth';
-import { Subscribe } from '~/components/subscribe';
 import { productCardTransformer } from '~/data-transformers/product-card-transformer';
 import { getPreferredCurrencyCode } from '~/lib/currency';
 
 import { Slideshow } from './_components/slideshow';
+
+import { ImageBanner } from "./_components/banner/ImageBanner";
+
+import { CategoryCarousel } from './_components/category-carousel';
+
+
 import { getPageData } from './page-data';
 
 interface Props {
@@ -29,6 +34,11 @@ export default async function Home({ params }: Props) {
     const currencyCode = await getPreferredCurrencyCode();
 
     return getPageData(currencyCode, customerAccessToken);
+  });
+
+  const streamableCategories = Streamable.from(async () => {
+    const data = await streamablePageData;
+    return data.site.categoryTree.slice(0, 6);
   });
 
   const streamableFeaturedProducts = Streamable.from(async () => {
@@ -53,10 +63,35 @@ export default async function Home({ params }: Props) {
       {/* 1. Hero */}
       <Slideshow />
 
-      {/* 2. Featured Products */}
+      {/* Banner */}
+
+      <ImageBanner href="/shop-all" alt="Shop All Products" />
+
+      {/* 2. Shop by Category */}
+
+      <CategoryCarousel
+        categories={await streamableCategories}
+        title="Shop by Category"
+        description="Browse our most popular collections."
+        cta={{ href: "/categories", label: "View All Categories" }}
+      />
+
+
+      {/* 2. New Arrivals */}
+      <section className="py-16 bg-gray-50">
+        <FeaturedProductCarousel cta={{ label: t('NewestProducts.cta'), href: '/shop-all/?sort=newest' }}
+          description={t('NewestProducts.description')}
+          emptyStateSubtitle={t('NewestProducts.emptyStateSubtitle')}
+          emptyStateTitle={t('NewestProducts.emptyStateTitle')}
+          nextLabel={t('NewestProducts.nextProducts')}
+          previousLabel={t('NewestProducts.previousProducts')}
+          products={streamableNewestProducts} title={t('NewestProducts.title')}
+        />
+      </section>
+
+      {/* 3. Featured Products */}
       <section className="py-12">
-        <FeaturedProductList
-          cta={{ label: t('FeaturedProducts.cta'), href: '/shop-all' }}
+        <FeaturedProductList cta={{ label: t('FeaturedProducts.cta'), href: '/shop-all' }}
           description={t('FeaturedProducts.description')}
           emptyStateSubtitle={t('FeaturedProducts.emptyStateSubtitle')}
           emptyStateTitle={t('FeaturedProducts.emptyStateTitle')}
@@ -65,27 +100,7 @@ export default async function Home({ params }: Props) {
         />
       </section>
 
-      {/* 3. New Arrivals */}
-      <section className="py-16 bg-gray-50">
-        <FeaturedProductCarousel
-          cta={{ label: t('NewestProducts.cta'), href: '/shop-all/?sort=newest' }}
-          description={t('NewestProducts.description')}
-          emptyStateSubtitle={t('NewestProducts.emptyStateSubtitle')}
-          emptyStateTitle={t('NewestProducts.emptyStateTitle')}
-          nextLabel={t('NewestProducts.nextProducts')}
-          previousLabel={t('NewestProducts.previousProducts')}
-          products={streamableNewestProducts}
-          title={t('NewestProducts.title')}
-        />
-      </section>
-
-     
-
-      {/* 5. Newsletter Signup */}
-      <section className="py-20 bg-primary text-white text-center">
-        <Subscribe />
-      </section>
     </main>
-    
+
   );
 }

@@ -7,6 +7,7 @@ import { FeaturedProductsCarouselFragment } from '~/components/featured-products
 import { FeaturedProductsListFragment } from '~/components/featured-products-list/fragment';
 import { FooterFragment, FooterSectionsFragment } from '~/components/footer/fragment';
 import { CurrencyCode, HeaderFragment, HeaderLinksFragment } from '~/components/header/fragment';
+import { CategoryCarouselFragment } from '~/app/[locale]/(default)/_components/category-carousel/fragment';
 
 export const LayoutQuery = graphql(
   `
@@ -50,10 +51,19 @@ const HomePageQuery = graphql(
             }
           }
         }
+
+        # Add categories for carousel
+        categoryTree {
+          ...CategoryCarouselFragment
+        }
       }
     }
   `,
-  [FeaturedProductsCarouselFragment, FeaturedProductsListFragment],
+  [
+    FeaturedProductsCarouselFragment,
+    FeaturedProductsListFragment,
+    CategoryCarouselFragment,
+  ],
 );
 
 export const getPageData = cache(

@@ -35,6 +35,9 @@
       "emptyStateSubtitle": "Try browsing our complete catalog of products.",
       "previousProducts": "Previous products",
       "nextProducts": "Next products"
+    },
+    "Categories": {
+      "title": "Shop by Category"
     }
   },
   "Auth": {
