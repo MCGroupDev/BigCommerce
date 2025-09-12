@@ -14,10 +14,10 @@ export function ImageBanner({ href, alt }: Props) {
     <section
       className="
         w-full 
-        px-2 py-4 sm:px-4 sm:py-6 md:px-6 md:py-8 lg:px-8 lg:py-12
+        px-4 py-4 sm:px-8 sm:py-6 md:px-8 md:py-8 lg:px-8 lg:py-8
       "
     >
-      <div className="mx-auto w-full max-w-screen-xl">
+      <div className="mx-auto w-full max-w-screen-2xl">
         <Link href={href} className="block w-full">
           <picture>
             {/* Mobile */}

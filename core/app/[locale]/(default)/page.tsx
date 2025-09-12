@@ -2,8 +2,7 @@ import { removeEdgesAndNodes } from '@bigcommerce/catalyst-client';
 import { getFormatter, getTranslations, setRequestLocale } from 'next-intl/server';
 
 import { Streamable } from '@/vibes/soul/lib/streamable';
-import { FeaturedProductCarousel } from '@/vibes/soul/sections/featured-product-carousel';
-import { FeaturedProductList } from '@/vibes/soul/sections/featured-product-list';
+import { NewArrivalsCarousel } from './_components/new-arrivals-carousel';
 import { getSessionCustomerAccessToken } from '~/auth';
 import { productCardTransformer } from '~/data-transformers/product-card-transformer';
 import { getPreferredCurrencyCode } from '~/lib/currency';
@@ -11,6 +10,10 @@ import { getPreferredCurrencyCode } from '~/lib/currency';
 import { Slideshow } from './_components/slideshow';
 
 import { ImageBanner } from "./_components/banner/ImageBanner";
+import { DoubleBanner } from './_components/banner/DoubleBanner';
+import DoubleBannerOne from './_components/banner/Double Banner 1.webp';
+import DoubleBannerTwo from './_components/banner/Double Banner 2.webp';
+import { IconBlocks } from './_components/icon-blocks';
 
 import { CategoryCarousel } from './_components/category-carousel';
 
@@ -64,11 +67,11 @@ export default async function Home({ params }: Props) {
       <Slideshow />
 
       {/* Banner */}
-
-      <ImageBanner href="/shop-all" alt="Shop All Products" />
+      <section className="py-16">
+        <ImageBanner href="/shop-all" alt="Shop All Products" />
+      </section>
 
       {/* 2. Shop by Category */}
-
       <CategoryCarousel
         categories={await streamableCategories}
         title="Shop by Category"
@@ -77,28 +80,34 @@ export default async function Home({ params }: Props) {
       />
 
 
-      {/* 2. New Arrivals */}
-      <section className="py-16 bg-gray-50">
-        <FeaturedProductCarousel cta={{ label: t('NewestProducts.cta'), href: '/shop-all/?sort=newest' }}
+      {/* 2. New Arrivals (custom carousel) */}
+        <NewArrivalsCarousel
+          title={t('NewestProducts.title')}
           description={t('NewestProducts.description')}
-          emptyStateSubtitle={t('NewestProducts.emptyStateSubtitle')}
-          emptyStateTitle={t('NewestProducts.emptyStateTitle')}
-          nextLabel={t('NewestProducts.nextProducts')}
+          products={streamableNewestProducts}
           previousLabel={t('NewestProducts.previousProducts')}
-          products={streamableNewestProducts} title={t('NewestProducts.title')}
+          nextLabel={t('NewestProducts.nextProducts')}
+          scrollbarLabel={t('NewestProducts.cta')}
         />
-      </section>
 
-      {/* 3. Featured Products */}
-      <section className="py-12">
-        <FeaturedProductList cta={{ label: t('FeaturedProducts.cta'), href: '/shop-all' }}
-          description={t('FeaturedProducts.description')}
-          emptyStateSubtitle={t('FeaturedProducts.emptyStateSubtitle')}
-          emptyStateTitle={t('FeaturedProducts.emptyStateTitle')}
-          products={streamableFeaturedProducts}
-          title={t('FeaturedProducts.title')}
-        />
-      </section>
+      {/* Double Banner */}
+      <DoubleBanner
+        left={{
+          desktopSrc: DoubleBannerOne.src,
+          alt: 'Shop New Collections',
+          href: '/shop-all',
+        }}
+        right={{
+          desktopSrc: DoubleBannerTwo.src,
+          alt: 'Explore Best Sellers',
+          href: '/shop-all?sort=bestselling',
+        }}
+      />
+
+      {/* Icon Blocks */}
+        <IconBlocks />
+
+
 
     </main>
 

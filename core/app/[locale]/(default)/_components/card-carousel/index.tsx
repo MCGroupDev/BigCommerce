@@ -37,7 +37,7 @@ export function CardCarousel({
       ? "aspect-square"
       : "aspect-[3/4]";
 
-  // 🔹 Scrollbar state
+  // Scrollbar state
   const [scrollbar, setScrollbar] = useState({ width: 0, left: 0 });
   const [api, setApi] = useState<any>(null);
 

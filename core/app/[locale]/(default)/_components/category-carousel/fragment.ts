@@ -9,5 +9,15 @@ export const CategoryCarouselFragment = graphql(`
       url(width: 600, height: 600)
       altText
     }
+    # Include one level of sub-categories
+    children {
+      entityId
+      name
+      path
+      image {
+        url(width: 600, height: 600)
+        altText
+      }
+    }
   }
 `);

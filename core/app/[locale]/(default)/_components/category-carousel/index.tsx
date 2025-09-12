@@ -17,6 +17,8 @@ interface Props {
 }
 
 export function CategoryCarousel({ categories, title, description, cta }: Props) {
+  const items = categories.flatMap((cat) => [cat, ...(cat.children ?? [])]);
+
   return (
     <SectionLayout containerSize="2xl">
       {/* Header Row */}
@@ -41,7 +43,7 @@ export function CategoryCarousel({ categories, title, description, cta }: Props)
       {/* Carousel */}
       <div className="group/category-carousel">
         <CardCarousel
-          cards={categories.map((cat, i) => ({
+          cards={items.map((cat, i) => ({
             id: String(cat.entityId ?? i),
             title: cat.name,
             href: cat.path,
